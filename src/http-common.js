@@ -1,17 +1,16 @@
 import axios from "axios";
 import keycloak from "./services/keycloak";
 
-const API_SERVER = import.meta.env.VITE_API_SERVER;
-const API_PORT = import.meta.env.VITE_API_PORT;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
-const httpCommon = axios.create({
-  baseURL: `http://${API_SERVER}:${API_PORT}/api`,
+const http = axios.create({
+  baseURL: API_BASE_URL,
   headers: {
-    "Content-type": "application/json",
+    "Content-Type": "application/json",
   },
 });
 
-httpCommon.interceptors.request.use(
+http.interceptors.request.use(
   async (config) => {
     if (keycloak.authenticated) {
       try {
@@ -25,9 +24,7 @@ httpCommon.interceptors.request.use(
 
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-export default httpCommon;
+export default http;
