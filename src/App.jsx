@@ -20,21 +20,9 @@ import CartPage from "./pages/CartPage";
 
 function App() {
   const { keycloak, initialized } = useKeycloak();
+const roles = initialized ? keycloak.tokenParsed?.realm_access?.roles || [] : [];
 
-  if (!initialized) {
-    return (
-      <>
-        <Navbar />
-        <div style={{ color: "white", textAlign: "center", marginTop: "40px" }}>
-          Cargando autenticación...
-        </div>
-      </>
-    );
-  }
-
-  const roles = keycloak.tokenParsed?.realm_access?.roles || [];
-
-  const isAuthenticated = keycloak.authenticated;
+  const isAuthenticated = initialized && keycloak.authenticated;
   const isAdmin = isAuthenticated && roles.includes("ADMIN");
 
   const AuthRoute = ({ children }) => {
