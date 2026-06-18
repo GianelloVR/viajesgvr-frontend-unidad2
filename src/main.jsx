@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     authClient={keycloak}
     initOptions={{
       checkLoginIframe: false,
-      pkceMethod: "S256",
+      pkceMethod: false,
     }}
     isLoadingCheck={() => false}
   >
