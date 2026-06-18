@@ -10,9 +10,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <ReactKeycloakProvider
     authClient={keycloak}
     initOptions={{
-      onLoad: "check-sso",
       checkLoginIframe: false,
+      pkceMethod: "S256",
     }}
+    isLoadingCheck={() => false}
   >
     <BrowserRouter>
       <App />
